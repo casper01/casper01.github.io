@@ -116,6 +116,7 @@
     <link rel="stylesheet" type="text/css" href="node_modules/semantic-ui/dist/semantic.min.css">
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/semantic-ui/dist/semantic.min.js"></script>
+    <script src="node_modules/vue/dist/vue.min.js"></script>
 
     <script>
         $(document)
@@ -206,44 +207,14 @@
             <!-- Projects section -->
             <div id="projectsSection">
                 <h1 class="ui dividing header">Projects</h1>
-                <div class="ui three column grid">
-                    <div class="column">
+                <div id="projectsContainer" class="ui three column grid">
+                    <div v-for="project in items" class="column">
                         <div class="ui fluid card">
                             <div class="image">
                                 <img src="http://agrobiodiversityplatform.org/files/2017/03/profile-icon-9.png">
                             </div>
                             <div class="content">
-                                <a class="header">Daniel Louise</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="ui fluid card">
-                            <div class="image">
-                                <img src="http://agrobiodiversityplatform.org/files/2017/03/profile-icon-9.png">
-                            </div>
-                            <div class="content">
-                                <a class="header">Helen Troy</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="ui fluid card">
-                            <div class="image">
-                                <img src="http://agrobiodiversityplatform.org/files/2017/03/profile-icon-9.png">
-                            </div>
-                            <div class="content">
-                                <a class="header">Elliot Fu</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="ui fluid card">
-                            <div class="image">
-                                <img src="http://agrobiodiversityplatform.org/files/2017/03/profile-icon-9.png">
-                            </div>
-                            <div class="content">
-                                <a class="header">Elliot Fu</a>
+                                <a class="header">{{ project.name }}</a>
                             </div>
                         </div>
                     </div>
@@ -282,7 +253,7 @@
                             <div class="ui statistics">
                                 <div class="statistic">
                                     <div class="value">
-                                        <i class="book icon"></i> 5
+                                        <i class="book icon"></i> {{ publicProjects }}
                                     </div>
                                     <div class="label">
                                         public projects
@@ -294,7 +265,7 @@
                             <div class="ui statistics">
                                 <div class="statistic">
                                     <div class="value">
-                                        <i class="pencil alternate icon"></i> 5
+                                        <i class="pencil alternate icon"></i> {{ programmingLanguages }}
                                     </div>
                                     <div class="label">
                                         programming languages
@@ -308,7 +279,7 @@
                             <div class="ui statistics">
                                 <div class="statistic">
                                     <div class="value">
-                                        <i class="file alternate outline icon"></i> 5
+                                        <i class="file alternate outline icon"></i> {{ codeLines }}
                                     </div>
                                     <div class="label">
                                         lines written
@@ -320,7 +291,7 @@
                             <div class="ui statistics">
                                 <div class="statistic">
                                     <div class="value">
-                                        <i class="star outline icon"></i> 5
+                                        <i class="star outline icon"></i> {{ watchers }}
                                     </div>
                                     <div class="label">
                                         times starred projects
@@ -516,6 +487,7 @@
             </div>
         </div>
     </div>
+    <script src="scripts/ghApiAccessor.js"></script>
 </body>
 
 </html>
