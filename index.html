@@ -222,24 +222,15 @@
             </div>
             <div id="languagesSection">
                 <h1 class="ui dividing header">Languages</h1>
-                <div class="ui two column grid">
-                    <div class="row">
+                <div id="languagesContainer" class="ui two column grid">
+                    <div v-for="lang in items" class="row">
                         <div class="four wide column">
-                            Python:
+                            {{ lang.name }}
                         </div>
                         <div class="twelve wide column">
-                            <div class="ui progress">
-                                <div class="bar"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="four wide column">
-                            Javascript:
-                        </div>
-                        <div class="twelve wide column">
-                            <div class="ui progress">
-                                <div class="bar"></div>
+                            <div v-bind:id="lang.id" class="ui indicating progress">
+                                <div class="bar">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -291,10 +282,10 @@
                             <div class="ui statistics">
                                 <div class="statistic">
                                     <div class="value">
-                                        <i class="star outline icon"></i> {{ watchers }}
+                                        <i class="eye icon"></i> {{ watchers }}
                                     </div>
                                     <div class="label">
-                                        times starred projects
+                                        watchers
                                     </div>
                                 </div>
                             </div>
