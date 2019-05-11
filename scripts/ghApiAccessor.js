@@ -1509,18 +1509,6 @@
         }
     ];
 
-
-    // TODO: to nie bedzie potrzebne po zrobieniu statystyk
-    // let stats = new Vue({
-    //     el: '#statsSection',
-    //     data: {
-    //         publicProjects: 0,
-    //         programmingLanguages: 0,
-    //         codeLines: 0,
-    //         watchers: 0
-    //     }
-    // });
-
     let updateRepos = function (projects) {
         let projInfos = [];
         projects.forEach(project => {
@@ -1553,7 +1541,7 @@
         // if requests failed, use backup
         if (Object.keys(langs).length == 0) {
             langs = LANGBACKUP;
-            for(let key in langs) {
+            for (let key in langs) {
                 valSum += langs[key];
             }
         }
@@ -1569,6 +1557,11 @@
             ind++;
         }
 
+        // sorting descending
+        languages.sort(function (first, second) {
+            return second.value - first.value;
+        });
+
         // generating html
         new Vue({
             el: '#languagesContainer',
@@ -1583,8 +1576,8 @@
             let proc = Math.round(language.value / valSum * 100) + 1;
 
             // logarythmic scale
-            let s = Math.round(4 * Math.log(valSum));
-            let v = Math.round(4 * Math.log(language.value));
+            let s = Math.round(Math.log(valSum) * Math.log(valSum));
+            let v = Math.round(Math.log(language.value) * Math.log(language.value));
 
             progressBar.progress("set total", s);
             progressBar.progress("set progress", v);
@@ -1615,7 +1608,7 @@
         if (commitsCount == 0) {
             commitsCount = COMMITSBACKUP;
         }
-        
+
 
         new Vue({
             el: '#statsSection',
