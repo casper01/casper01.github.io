@@ -6,6 +6,7 @@
             this.name = name;
             this.fork = fork;
             this.languages = [];
+            this.commitsCount;
         }
     }
 
@@ -30,6 +31,19 @@
                 .done(function (data) {
                     console.log("getProjectLanguages", data);
                     project.languages = data;
+                });
+        }
+
+        getProjectCommits(project) {
+            let self = this;
+            return $.getJSON("|||https://api.github.com/repos/" + this._username + "/" + project.name + "/commits")
+                .fail(function (data) {
+                    console.warn("Could not load commits from Github API");
+                    project.commitsCount = 0;
+                })
+                .done(function (data) {
+                    console.log("getProjectCommits", data);
+                    project.commitsCount = data.length;
                 });
         }
 
@@ -62,6 +76,8 @@
                 });
         }
     };
+
+    const COMMITSBACKUP = 209;
 
     const LANGBACKUP = {
         "C#": 121867,
@@ -1580,12 +1596,14 @@
     let updateStats = function (projects) {
         let langs = new Set();
         let watchersCnt = 0;
+        let commitsCount = 0;
 
         projects.forEach(project => {
             watchersCnt += project.watchers_count;
             for (key in project.languages) {
                 langs.add(key);
             }
+            commitsCount += project.commitsCount;
         });
 
         // if requests failed, use backup
@@ -1594,6 +1612,9 @@
                 langs.add(key);
             }
         }
+        if (commitsCount == 0) {
+            commitsCount = COMMITSBACKUP;
+        }
         
 
         new Vue({
@@ -1601,7 +1622,7 @@
             data: {
                 publicProjects: projects.length,
                 programmingLanguages: langs.size,
-                codeLines: 1200,
+                commits: commitsCount,
                 watchers: watchersCnt
             }
         });
@@ -1623,6 +1644,7 @@
         let promises = [];
         api.projects.forEach(project => {
             promises.push(api.getProjectLanguages(project));
+            promises.push(api.getProjectCommits(project));
         });
 
         Promise.all(promises.map(p => p.catch(() => undefined))).then(function () {
