@@ -296,7 +296,8 @@
             </div>
             <div id="contactSection">
                 <h1 class="ui dividing header">Contact</h1>
-                <form class="ui form">
+                <form class="ui form" action="https://formspree.io/kacper133@gmail.com" method="POST"> 
+                    <!-- TODO: not too safe -->
                     <div class="required field">
                         <!-- <label>Name</label> -->
                         <input type="text" name="name" placeholder="Name">
@@ -311,7 +312,7 @@
                     </div>
                     <div class="field">
                         <!-- <label>Message</label> -->
-                        <textarea rows="10"></textarea>
+                        <textarea name="message" rows="10"></textarea>
                     </div>
                     <button class="ui button" type="submit">Send</button>
                 </form>
