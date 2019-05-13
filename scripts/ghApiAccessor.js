@@ -1,5 +1,6 @@
 (function () {
     'use strict';
+    let grabity = require("grabity");
 
     class Project {
         constructor(name, fork = false) {
@@ -7,6 +8,7 @@
             this.fork = fork;
             this.languages = [];
             this.commitsCount;
+            this.imgUrl = "http://agrobiodiversityplatform.org/files/2017/03/profile-icon-9.png";    // TODO: set to default
         }
     }
 
@@ -45,6 +47,17 @@
                     console.log("getProjectCommits", data);
                     project.commitsCount = data.length;
                 });
+        }
+
+        getProjectImage(project) {
+            return (async () => {
+                // let it = await grabity.grabIt("https://cors.io/?https://www.flickr.com");
+                let it = await grabity.grabIt("https://cors.io/?https://github.com/casper01/" + project.name);
+                console.log('grabity result:', it);  // TODO: brudno
+                project.imgUrl = it.image;
+                // console.log("imgUrl = ", project.imgUrl);
+                // project.imgUrl = it.image;
+            })();
         }
 
         getOveralInfo() {
@@ -1510,17 +1523,10 @@
     ];
 
     let updateRepos = function (projects) {
-        let projInfos = [];
-        projects.forEach(project => {
-            // do not include forked projects
-            if (!project.fork)
-                projInfos.push({ name: project.name })
-        });
-
         new Vue({
             el: '#projectsContainer',
             data: {
-                items: projInfos
+                items: projects
             }
         });
     }
@@ -1621,12 +1627,12 @@
         });
     }
 
-    let api = new GhApi('casper01');
+    let api = new GhApi('casper01');  // laucer, rosmat
     // api.getOveralInfo();
     // api.getRepos(updateRepos);
     // let p1 = api.getOveralInfo();    // TODO: ta metoda jest nieuzywana
     let p2 = api.getRepos();
-    let p1 = p2;
+    let p1 = p2;    // TODO: troche chaos, naprawic to
 
     Promise.all([p1, p2].map(p => p.catch(() => undefined))).then(function (values) {
         // in case of fail
@@ -1638,9 +1644,11 @@
         api.projects.forEach(project => {
             promises.push(api.getProjectLanguages(project));
             promises.push(api.getProjectCommits(project));
+            promises.push(api.getProjectImage(project));
         });
 
         Promise.all(promises.map(p => p.catch(() => undefined))).then(function () {
+            console.log("Czekanie skonczone");
             updateRepos(api.projects);
             updateLanguages(api.projects);
             updateStats(api.projects);

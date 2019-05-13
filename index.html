@@ -211,7 +211,8 @@
                     <div v-for="project in items" class="column">
                         <div class="ui fluid card">
                             <div class="image">
-                                <img src="http://agrobiodiversityplatform.org/files/2017/03/profile-icon-9.png">
+                                <img v-bind:src="project.imgUrl">
+                                <!-- <img src="https://iop.global/wp-content/uploads/2018/07/github.png" v-bind:src=""> -->
                             </div>
                             <div class="content">
                                 <a class="header">{{ project.name }}</a>
@@ -478,7 +479,8 @@
             </div>
         </div>
     </div>
-    <script src="scripts/ghApiAccessor.js"></script>
+    <script src="bundle.js"></script>
+    <!-- <script src="scripts/ghApiAccessor.js"></script> -->
 </body>
 
 </html>
