@@ -1,3 +1,10 @@
+.section {
+    text-align: center;
+}
+.section h1 {
+    text-align: left;
+}
+
 #mainContainer {
     padding-bottom: 3em;
 }
@@ -38,4 +45,17 @@
 
 .dividing.header {
     padding-top: 4em;
+}
+
+.upIcon {
+    margin: 2em !important;
+}
+
+#loginHeader {
+    display: block; 
+    width: 100%;
+}
+
+#infoHeader {
+    display: block;
 }

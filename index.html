@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>casper01 - Github profile</title>
+    <title>Github profile</title>
 
     <link rel="stylesheet" type="text/css" href="node_modules/semantic-ui/dist/semantic.min.css">
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
@@ -16,145 +16,152 @@
 
 <body>
     <!-- Page Contents -->
-        <!-- Front page info -->
-        <div class="ui inverted vertical masthead center aligned segment grid">
-            <div class="ui row container"></div>
-            <!-- Front page text -->
-            <div class="ui row text container">
-                <h1 id="loginHeader" class="ui inverted header transition hidden" style="display:block; width: 100%">
-                    casper01
-                </h1>
-                <h2 id="infoHeader" class="transition hidden" style="display: block">
-                    GitHub Profile
-                </h2>
-            </div>
-            <!-- Front page menu -->
-            <div class="ui row container">
-                <div id="mainMenu" class="ui large secondary inverted pointing menu">
-                    <a class="item" v-on:click="animateTo('#projectsSection')">Projects</a>
-                    <a class="item" v-on:click="animateTo('#languagesSection')">Languages</a>
-                    <a class="item" v-on:click="animateTo('#statsSection')">Stats</a>
-                    <a class="item" v-on:click="animateTo('#contactSection')">Contact</a>
-                </div>
-            </div>
-            <div class="ui row container"></div>
+    <!-- Front page info -->
+    <div id="mainMenu" class="ui inverted vertical masthead center aligned segment grid">
+        <div class="ui row container"></div>
+        <!-- Front page text -->
+        <div id="header" class="ui row text container">
+            <h1 id="loginHeader" class="ui inverted header transition hidden">
+                {{ login }}
+            </h1>
+            <h2 id="infoHeader" class="transition hidden">
+                Dynamically generated GitHub profile
+            </h2>
         </div>
-
-
-        <!-- sections -->
-        <div id="mainContainer" class="ui text container">
-            <!-- Projects section -->
-            <div id="projectsSection">
-                <h1 class="ui dividing header">Projects</h1>
-                <div id="projectsContainer" class="ui link cards">
-                    <div v-for="project in items" class="ui card">
-                        <div class="image">
-                            <img v-bind:src="project.imgUrl" style="object-fit: cover; height: 200px;">
-                            <!-- <img src="https://iop.global/wp-content/uploads/2018/07/github.png" v-bind:src=""> -->
-                        </div>
-                        <div class="content">
-                            <a class="header">{{ project.name }}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="languagesSection">
-                <h1 class="ui dividing header">Languages</h1>
-                <div id="languagesContainer" class="ui two column grid">
-                    <div v-for="lang in items" class="row">
-                        <div class="four wide column">
-                            {{ lang.name }}
-                        </div>
-                        <div class="twelve wide column">
-                            <div v-bind:id="lang.id" class="ui indicating progress">
-                                <div class="bar">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="statsSection">
-                <h1 class="ui dividing header">Statistics</h1>
-                <div class="ui three column center aligned grid">
-                    <div class="row">
-                        <div class="column">
-                            <div class="ui statistics">
-                                <div class="statistic">
-                                    <div class="value">
-                                        <i class="book icon"></i> {{ publicProjects }}
-                                    </div>
-                                    <div class="label">
-                                        public projects
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui statistics">
-                                <div class="statistic">
-                                    <div class="value">
-                                        <i class="pencil alternate icon"></i> {{ programmingLanguages }}
-                                    </div>
-                                    <div class="label">
-                                        languages
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="column">
-                            <div class="ui statistics">
-                                <div class="statistic">
-                                    <div class="value">
-                                        <i class="neuter icon"></i> {{ commits }}
-                                    </div>
-                                    <div class="label">
-                                        commits
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="ui statistics">
-                                <div class="statistic">
-                                    <div class="value">
-                                        <i class="eye icon"></i> {{ watchers }}
-                                    </div>
-                                    <div class="label">
-                                        watchers
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="contactSection">
-                <h1 class="ui dividing header">Contact</h1>
-                <form class="ui form" action="https://formspree.io/kacper133@gmail.com" method="POST">
-                    <!-- TODO: not too safe -->
-                    <div class="required field">
-                        <!-- <label>Name</label> -->
-                        <input type="text" name="name" placeholder="Name">
-                    </div>
-                    <div class="field">
-                        <!-- <label>Last Name</label> -->
-                        <input type="email" name="email" placeholder="Email">
-                    </div>
-                    <div class="field">
-                        <!-- <label>Last Name</label> -->
-                        <input type="text" name="subject" placeholder="Subject">
-                    </div>
-                    <div class="field">
-                        <!-- <label>Message</label> -->
-                        <textarea name="message" rows="10"></textarea>
-                    </div>
-                    <button class="ui button" type="submit">Send</button>
-                </form>
+        <!-- Front page menu -->
+        <div class="ui row container">
+            <div class="ui large secondary inverted pointing menu">
+                <a class="item" v-on:click="animateTo('#projectsSection')">Projects</a>
+                <a class="item" v-on:click="animateTo('#languagesSection')">Languages</a>
+                <a class="item" v-on:click="animateTo('#statsSection')">Stats</a>
+                <a class="item" v-on:click="animateTo('#contactSection')">Contact</a>
             </div>
         </div>
+        <div class="ui row container"></div>
+    </div>
+
+
+    <!-- sections -->
+    <div id="mainContainer" class="ui text container">
+        <!-- Projects section -->
+        <div id="projectsSection" class="section">
+            <h1 class="ui dividing header">Projects</h1>
+            <div id="projectsContainer" class="ui link cards">
+                <div v-for="project in items" class="ui card" style="width:222px">
+                    <div class="image">
+                        <img v-bind:src="project.imgUrl" style="object-fit: cover; height: 200px;">
+                    </div>
+                    <div class="content">
+                        <a class="header">{{ project.name }}</a>
+                    </div>
+                </div>
+            </div>
+            <i class="big arrow alternate circle up link icon upIcon"
+                onclick="$('html,body').animate({ scrollTop: $('body').offset().top }, 'slow');"></i>
+        </div>
+        <div id="languagesSection" class="section">
+            <h1 class="ui dividing header">Languages</h1>
+            <div id="languagesContainer" class="ui two column grid">
+                <div v-for="lang in items" class="row">
+                    <div class="four wide column">
+                        {{ lang.name }}
+                    </div>
+                    <div class="twelve wide column">
+                        <div v-bind:id="lang.id" class="ui indicating progress">
+                            <div class="bar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <i class="big arrow alternate circle up link icon upIcon"
+                onclick="$('html,body').animate({ scrollTop: $('body').offset().top }, 'slow');"></i>
+        </div>
+        <div id="statsSection" class="section">
+            <h1 class="ui dividing header">Statistics</h1>
+            <div class="ui three column center aligned grid">
+                <div class="row">
+                    <div class="column">
+                        <div class="ui statistics">
+                            <div class="statistic">
+                                <div class="value">
+                                    <i class="book icon"></i> {{ publicProjects }}
+                                </div>
+                                <div class="label">
+                                    public projects
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui statistics">
+                            <div class="statistic">
+                                <div class="value">
+                                    <i class="pencil alternate icon"></i> {{ programmingLanguages }}
+                                </div>
+                                <div class="label">
+                                    languages
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <div class="ui statistics">
+                            <div class="statistic">
+                                <div class="value">
+                                    <i class="neuter icon"></i> {{ commits }}
+                                </div>
+                                <div class="label">
+                                    commits
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="ui statistics">
+                            <div class="statistic">
+                                <div class="value">
+                                    <i class="eye icon"></i> {{ watchers }}
+                                </div>
+                                <div class="label">
+                                    watchers
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <i class="big arrow alternate circle up link icon upIcon"
+                onclick="$('html,body').animate({ scrollTop: $('body').offset().top }, 'slow');"></i>
+        </div>
+        <div id="contactSection" class="section">
+            <h1 class="ui dividing header">Contact</h1>
+            <form class="ui form" action="https://formspree.io/kacper133@gmail.com" method="POST">
+                <!-- TODO: not too safe -->
+                <div class="required field">
+                    <!-- <label>Name</label> -->
+                    <input type="text" name="name" placeholder="Name">
+                </div>
+                <div class="field">
+                    <!-- <label>Last Name</label> -->
+                    <input type="email" name="email" placeholder="Email">
+                </div>
+                <div class="field">
+                    <!-- <label>Last Name</label> -->
+                    <input type="text" name="subject" placeholder="Subject">
+                </div>
+                <div class="field">
+                    <!-- <label>Message</label> -->
+                    <textarea name="message" rows="10"></textarea>
+                </div>
+                <button class="ui button" type="submit">Send</button>
+            </form>
+            <i class="big arrow alternate circle up link icon upIcon"
+                onclick="$('html,body').animate({ scrollTop: $('body').offset().top }, 'slow');"></i>
+        </div>
+    </div>
     <script src="bundle.js"></script>
     <link href="styles/style.css" rel="stylesheet" type="text/css">
 </body>
