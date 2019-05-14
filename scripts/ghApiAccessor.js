@@ -125,6 +125,7 @@
         _getProjectImage(project) {
             return (async () => {
                 let it = await grabity.grabIt(this._urls.imageInfo(project));
+                console.log("it = ", it);   // TODO: zeby sprawdzic jak sie wywala
                 project.imgUrl = it.image;
             })();
         }
@@ -231,6 +232,18 @@
             }
         });
     }
+
+    let onSiteReady = function () {
+        $('#loginHeader')
+            .transition({
+                duration: 2000,
+                onComplete: function() {
+                    $('#infoHeader').transition({ duration: 2000 });
+                }
+            });
+    }
+
+    onSiteReady();
 
     let api = new GhApi('casper01', false);  // laucer, rosmat
     // api.getOveralInfo();
