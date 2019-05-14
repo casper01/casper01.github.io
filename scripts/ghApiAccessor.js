@@ -234,6 +234,16 @@
     }
 
     let onSiteReady = function () {
+        new Vue({
+            el: "#mainMenu",
+            methods: {
+                animateTo: function(destId) {
+                    $('html,body').animate({scrollTop: $(destId).offset().top},'slow');
+                }
+            }
+        });
+
+
         $('#loginHeader')
             .transition({
                 duration: 2000,

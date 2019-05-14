@@ -1,3 +1,7 @@
+#mainContainer {
+    padding-bottom: 3em;
+}
+
 .masthead.segment {
     padding: 1em 0em;
     margin: 0 !important;
@@ -30,4 +34,8 @@
         margin-top: 0.5em;
         font-size: 1.5em;
     }
+}
+
+.dividing.header {
+    padding-top: 4em;
 }
