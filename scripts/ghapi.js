@@ -95,19 +95,7 @@
                 });
         }
 
-        getProjectsImage(projects) {
-            let promises = [];
-            projects.forEach(project => {
-                promises.push(this._getProjectImage(project));
-            });
-            return Promise.all(promises)
-                .catch(function (values) {
-                    console.warn("Failed to load images from GitHub project");
-                    return Promise.resolve();
-                });
-        }
-
-        _getProjectImage(project) {
+        getProjectImage(project) {
             return (async () => {
                 let it = await grabity.grabIt(this._urls.imageInfo(project));
                 console.log("it = ", it);   // TODO: zeby sprawdzic jak sie wywala
@@ -117,7 +105,10 @@
 
         getRepos() {
             if (!this._online) {
-                this.projects = backup.REPOSBACKUP
+                this.projects = [];
+                backup.REPOSBACKUP.forEach(repo => {
+                    this.projects.push(new Project(repo.name, repo.watchers_count, repo.fork));
+                });
                 return Promise.resolve();
             }
 

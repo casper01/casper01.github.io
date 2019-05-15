@@ -112,7 +112,12 @@
             let promises = [];
             promises.push(api.getProjectsLanguages(api.projects));
             promises.push(api.getProjectsCommits(api.projects));
-            promises.push(api.getProjectsImage(api.projects));
+            api.projects.forEach(project => {
+                api.getProjectImage(project)
+                    .then(function(val) {
+                        Vue.set(vueObjects.repos, 'projects', api.projects);
+                    });
+            });
 
             Promise.all(promises)
                 .then(function () {
