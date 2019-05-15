@@ -8,10 +8,10 @@
         langs: undefined,
         stats: undefined,
         menu: undefined,
+        contact: undefined
     };
 
-    let online = false;
-    let api = new GhApi(settings.login, online);
+    let api = new GhApi(settings.login, settings.online);
 
     let updateRepos = function (projects) {
         vueObjects.repos = new Vue({
@@ -82,6 +82,13 @@
     }
 
     let onSiteReady = function () {
+        vueObjects.contact = new Vue({
+            el: "#contactSection",
+            data: {
+                test: "https://formspree.io/" + settings.contactEmail
+            }
+        });
+
         vueObjects.menu = new Vue({
             el: "#mainMenu",
             data: {

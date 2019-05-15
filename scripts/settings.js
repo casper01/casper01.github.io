@@ -1,2 +1,3 @@
 exports.login = "casper01";
-exports.email = "kacper133@gmail.com";
+exports.contactEmail = "kacper133@gmail.com";
+exports.online = true;
