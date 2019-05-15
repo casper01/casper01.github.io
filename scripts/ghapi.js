@@ -49,7 +49,6 @@
         }
 
         _getProjectLanguages(project) {
-            let self = this;
             return $.getJSON(this._urls.langInfo(project))
                 .fail(function (data) {
                     console.warn("Could not load languages from Github API");
@@ -85,7 +84,6 @@
         }
 
         _getProjectCommits(project) {
-            let self = this;
             return $.getJSON(this._urls.commitsInfo(project))
                 .fail(function (data) {
                     console.warn("Could not load commits from Github API");
@@ -98,7 +96,6 @@
         getProjectImage(project) {
             return (async () => {
                 let it = await grabity.grabIt(this._urls.imageInfo(project));
-                console.log("it = ", it);   // TODO: zeby sprawdzic jak sie wywala
                 project.imgUrl = it.image;
             })();
         }
@@ -107,7 +104,10 @@
             if (!this._online) {
                 this.projects = [];
                 backup.REPOSBACKUP.forEach(repo => {
-                    this.projects.push(new Project(repo.name, repo.watchers_count, repo.fork));
+                    if (!repo.fork) {
+                        let homepage = repo.homepage ? repo.homepage : repo.html_url;
+                        this.projects.push(new Project(repo.name, repo.watchers_count, homepage));
+                    }
                 });
                 return Promise.resolve();
             }
@@ -120,8 +120,12 @@
                 })
                 .done(function (data) {
                     self.repos = data;
+                    console.log("repos:", data);   // TODO: remove it
                     data.forEach(repo => {
-                        self.projects.push(new Project(repo.name, repo.watchers_count, repo.fork));
+                        if (!repo.fork) {
+                            let homepage = repo.homepage ? repo.homepage : repo.html_url;
+                            self.projects.push(new Project(repo.name, repo.watchers_count, homepage));
+                        }
                     });
                 });
         }

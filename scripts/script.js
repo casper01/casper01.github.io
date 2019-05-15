@@ -2,6 +2,7 @@
     'use strict';
     let GhApi = require("./ghapi");
     let settings = require("./settings");
+    let api = new GhApi(settings.login, settings.online);
 
     let vueObjects = {
         repos: undefined,
@@ -11,13 +12,16 @@
         contact: undefined
     };
 
-    let api = new GhApi(settings.login, settings.online);
-
     let updateRepos = function (projects) {
         vueObjects.repos = new Vue({
             el: '#projectsContainer',
             data: {
                 items: projects
+            },
+            methods: {
+                redirect: function(project) {
+                    window.open(project.homepage, '_blank');
+                }
             }
         });
     }
@@ -81,7 +85,7 @@
         });
     }
 
-    let onSiteReady = function () {
+    let loadAllData = function () {
         vueObjects.contact = new Vue({
             el: "#contactSection",
             data: {
@@ -109,34 +113,33 @@
                     $('#infoHeader').transition({ duration: 2000 });
                 }
             });
+
+        api.getRepos()
+            .then(function (values) {
+                let promises = [];
+                promises.push(api.getProjectsLanguages(api.projects));
+                promises.push(api.getProjectsCommits(api.projects));
+                api.projects.forEach(project => {
+                    api.getProjectImage(project)
+                        .then(function (val) {
+                            Vue.set(vueObjects.repos, 'projects', api.projects);
+                        });
+                });
+
+                Promise.all(promises)
+                    .then(function () {
+                        updateRepos(api.projects);
+                        updateLanguages(api.languages);
+                        updateStats(api);
+                    })
+                    .catch(function (value) {
+                        console.warn("Error while downloading languages, commits, images", value);
+                    });
+            })
+            .catch(function (value) {
+                console.warn("Error while downloading repos info", value);
+            });
     }
 
-    onSiteReady();
-
-
-    api.getRepos()
-        .then(function (values) {
-            let promises = [];
-            promises.push(api.getProjectsLanguages(api.projects));
-            promises.push(api.getProjectsCommits(api.projects));
-            api.projects.forEach(project => {
-                api.getProjectImage(project)
-                    .then(function(val) {
-                        Vue.set(vueObjects.repos, 'projects', api.projects);
-                    });
-            });
-
-            Promise.all(promises)
-                .then(function () {
-                    updateRepos(api.projects);
-                    updateLanguages(api.languages);
-                    updateStats(api);
-                })
-                .catch(function (value) {
-                    console.warn("Error while downloading languages, commits, images", value);
-                });
-        })
-        .catch(function (value) {
-            console.log("Error while downloading repos info", value);
-        });
+    loadAllData();
 }());
