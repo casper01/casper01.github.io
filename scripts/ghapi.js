@@ -95,31 +95,32 @@
 
         getProjectImage(project) {
             return (async () => {
-                console.log("przed pobieraniem z url:", this._urls.imageInfo(project));
                 let it = await grabity.grabIt(this._urls.imageInfo(project));
-                console.log("po pobieraniu");
                 project.imgUrl = it.image;
-                console.log("Image downloaded", it);
             })();
         }
 
         getRepos() {
-            if (!this._online) {
-                this.projects = [];
+            let self = this;
+            let goOffline = function() {
+                self.projects = [];
                 backup.REPOSBACKUP.forEach(repo => {
                     if (!repo.fork) {
                         let homepage = repo.homepage ? repo.homepage : repo.html_url;
-                        this.projects.push(new Project(repo.name, repo.watchers_count, homepage));
+                        self.projects.push(new Project(repo.name, repo.watchers_count, homepage));
                     }
                 });
+            }
+            
+            if (!this._online) {
+                goOffline();
                 return Promise.resolve();
             }
 
-            let self = this;
             return $.getJSON(this._urls.reposInfo)
                 .fail(function () {
                     console.warn("Could not load repositories info from Github API");
-                    self.projects = backup.REPOSBACKUP;
+                    goOffline();
                 })
                 .done(function (data) {
                     self.repos = data;

@@ -67,6 +67,10 @@
         });
     }
 
+    let showContent = function() {
+        $("#mainContainer").css("display", "block");
+    }
+
     let updateStats = function (api) {
         let watchersCnt = 0;
 
@@ -114,32 +118,28 @@
                 }
             });
 
-        api.getRepos()
-            .then(function (values) {
-                let promises = [];
-                promises.push(api.getProjectsLanguages(api.projects));
-                promises.push(api.getProjectsCommits(api.projects));
-                // api.projects.forEach(project => {
-                //     api.getProjectImage(project)
-                //         .then(function (val) {
-                //             Vue.set(vueObjects.repos, 'projects', api.projects);
-                //         });
-                // });
+        let getReposCallback = function (value) {
+            let promises = [];
+            promises.push(api.getProjectsLanguages(api.projects));
+            promises.push(api.getProjectsCommits(api.projects));
+            // api.projects.forEach(project => {
+            //     api.getProjectImage(project)
+            //         .then(function (val) {
+            //             Vue.set(vueObjects.repos, 'projects', api.projects);
+            //         });
+            // });
 
-                Promise.all(promises)
-                    .then(function () {
-                        updateRepos(api.projects);
-                        updateLanguages(api.languages);
-                        updateStats(api);
-                        console.log("Wszystko gotowe!");
-                    })
-                    .catch(function (value) {
-                        console.warn("Error while downloading languages, commits, images", value);
-                    });
-            })
-            .catch(function (value) {
-                console.warn("Error while downloading repos info", value);
-            });
+            let getLangsCommitsCallback = function() {
+                updateRepos(api.projects);
+                updateLanguages(api.languages);
+                updateStats(api);
+                showContent();
+            }
+
+            Promise.all(promises).then(getLangsCommitsCallback).catch(getLangsCommitsCallback);
+        }
+
+        api.getRepos().catch(getReposCallback).catch(getReposCallback);
     }
 
     loadAllData();
