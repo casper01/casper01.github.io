@@ -110,13 +110,15 @@
         });
 
 
-        $('#loginHeader')
+        let showMainPageInfo = function() {
+            $('#loginHeader')
             .transition({
                 duration: 2000,
                 onComplete: function () {
                     $('#infoHeader').transition({ duration: 2000 });
                 }
             });
+        }
 
         let getReposCallback = function (value) {
             let promises = [];
@@ -130,6 +132,7 @@
             // });
 
             let getLangsCommitsCallback = function() {
+                showMainPageInfo();
                 updateRepos(api.projects);
                 updateLanguages(api.languages);
                 updateStats(api);
@@ -139,7 +142,7 @@
             Promise.all(promises).then(getLangsCommitsCallback).catch(getLangsCommitsCallback);
         }
 
-        api.getRepos().catch(getReposCallback).catch(getReposCallback);
+        api.getRepos().then(getReposCallback).catch(getReposCallback);
     }
 
     loadAllData();
