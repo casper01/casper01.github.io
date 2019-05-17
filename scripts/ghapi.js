@@ -11,7 +11,7 @@
                 reposInfo: "https://api.github.com/users/" + this.username + "/repos",
                 langInfo: function (project) { return "https://api.github.com/repos/" + username + "/" + project.name + "/languages" },
                 commitsInfo: function (project) { return "https://api.github.com/repos/" + username + "/" + project.name + "/commits" },
-                imageInfo: function (project) { return "https://github.com/" + username + "/" + project.name }
+                imageInfo: function (project) { return "https://cors.io/https://github.com/" + username + "/" + project.name }
             };
             this.projects = [];
             this.languages;
@@ -95,8 +95,11 @@
 
         getProjectImage(project) {
             return (async () => {
+                console.log("przed pobieraniem z url:", this._urls.imageInfo(project));
                 let it = await grabity.grabIt(this._urls.imageInfo(project));
+                console.log("po pobieraniu");
                 project.imgUrl = it.image;
+                console.log("Image downloaded", it);
             })();
         }
 

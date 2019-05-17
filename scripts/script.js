@@ -119,18 +119,19 @@
                 let promises = [];
                 promises.push(api.getProjectsLanguages(api.projects));
                 promises.push(api.getProjectsCommits(api.projects));
-                api.projects.forEach(project => {
-                    api.getProjectImage(project)
-                        .then(function (val) {
-                            Vue.set(vueObjects.repos, 'projects', api.projects);
-                        });
-                });
+                // api.projects.forEach(project => {
+                //     api.getProjectImage(project)
+                //         .then(function (val) {
+                //             Vue.set(vueObjects.repos, 'projects', api.projects);
+                //         });
+                // });
 
                 Promise.all(promises)
                     .then(function () {
                         updateRepos(api.projects);
                         updateLanguages(api.languages);
                         updateStats(api);
+                        console.log("Wszystko gotowe!");
                     })
                     .catch(function (value) {
                         console.warn("Error while downloading languages, commits, images", value);

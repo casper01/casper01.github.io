@@ -47,7 +47,7 @@
         <div id="projectsSection" class="section">
             <h1 class="ui dividing header">Projects</h1>
             <div id="projectsContainer" class="ui link cards">
-                <div v-for="project in items" v-on:click="redirect(project)" class="ui card" style="width:222px">
+                <div v-for="project in items" v-on:click="redirect(project)" class="ui card" style="width:222px; margin-left:auto; margin-right:auto">
                     <div class="image">
                         <img v-bind:src="project.imgUrl" style="object-fit: cover; height: 200px;">
                     </div>
