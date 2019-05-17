@@ -8,10 +8,10 @@
             this._online = online;
             this.username = username;
             this._urls = {
-                reposInfo: "https://cors.io/?https://api.github.com/users/" + this.username + "/repos",
+                reposInfo: "https://api.github.com/users/" + this.username + "/repos",
                 langInfo: function (project) { return "https://api.github.com/repos/" + username + "/" + project.name + "/languages" },
                 commitsInfo: function (project) { return "https://api.github.com/repos/" + username + "/" + project.name + "/commits" },
-                imageInfo: function (project) { return "https://cors.io/?https://github.com/" + username + "/" + project.name }
+                imageInfo: function (project) { return "https://github.com/" + username + "/" + project.name }
             };
             this.projects = [];
             this.languages;
@@ -120,7 +120,6 @@
                 })
                 .done(function (data) {
                     self.repos = data;
-                    console.log("repos:", data);   // TODO: remove it
                     data.forEach(repo => {
                         if (!repo.fork) {
                             let homepage = repo.homepage ? repo.homepage : repo.html_url;
