@@ -1,5 +1,4 @@
 (function () {
-    let grabity = require("grabity");
     let Project = require("./project");
     const backup = require("./backup");
 
@@ -10,15 +9,14 @@
             this._urls = {
                 reposInfo: "https://api.github.com/users/" + this.username + "/repos",
                 langInfo: function (project) { return "https://api.github.com/repos/" + username + "/" + project.name + "/languages" },
-                commitsInfo: function (project) { return "https://api.github.com/repos/" + username + "/" + project.name + "/commits" },
-                imageInfo: function (project) { return "https://cors.io/https://github.com/" + username + "/" + project.name }
+                commitsInfo: function (project) { return "https://api.github.com/repos/" + username + "/" + project.name + "/commits" }
             };
             this.projects = [];
             this.languages;
             this.commitsSum;
         }
 
-        getProjectsLanguages(projects) {
+        getProjectsLanguages() {
             if (!this._online) {
                 this.languages = backup.LANGBACKUP;
                 return Promise.resolve();
@@ -26,7 +24,7 @@
 
             let self = this;
             let promises = [];
-            projects.forEach(project => {
+            this.projects.forEach(project => {
                 promises.push(this._getProjectLanguages(project));
             });
             return Promise.all(promises)
@@ -58,7 +56,7 @@
                 });
         }
 
-        getProjectsCommits(projects) {
+        getProjectsCommits() {
             if (!this._online) {
                 this.commitsSum = backup.COMMITSBACKUP;
                 return Promise.resolve();
@@ -66,7 +64,7 @@
 
             let self = this;
             let promises = [];
-            projects.forEach(project => {
+            this.projects.forEach(project => {
                 promises.push(this._getProjectCommits(project));
             });
             return Promise.all(promises)
@@ -93,13 +91,6 @@
                 });
         }
 
-        getProjectImage(project) {
-            return (async () => {
-                let it = await grabity.grabIt(this._urls.imageInfo(project));
-                project.imgUrl = it.image;
-            })();
-        }
-
         getRepos() {
             let self = this;
             let goOffline = function() {
@@ -107,7 +98,8 @@
                 backup.REPOSBACKUP.forEach(repo => {
                     if (!repo.fork) {
                         let homepage = repo.homepage ? repo.homepage : repo.html_url;
-                        self.projects.push(new Project(repo.name, repo.watchers_count, homepage));
+                        let creationDate = new Date(Date.parse(repo.created_at));
+                        self.projects.push(new Project(repo.name, repo.watchers_count, homepage, creationDate));
                     }
                 });
             }
@@ -127,7 +119,8 @@
                     data.forEach(repo => {
                         if (!repo.fork) {
                             let homepage = repo.homepage ? repo.homepage : repo.html_url;
-                            self.projects.push(new Project(repo.name, repo.watchers_count, homepage));
+                            let creationDate = new Date(Date.parse(repo.created_at));
+                            self.projects.push(new Project(repo.name, repo.watchers_count, homepage, creationDate));
                         }
                     });
                 });

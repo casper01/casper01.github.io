@@ -18,6 +18,9 @@
     <!-- Page Contents -->
     <!-- Front page info -->
     <div id="mainMenu" class="ui inverted vertical masthead center aligned segment grid">
+        <div id="mainMenuDimmer" class="ui active dimmer">
+            <div class="ui indeterminate text loader">Downloading data from GitHub</div>
+        </div>
         <div class="ui row container"></div>
         <!-- Front page text -->
         <div id="header" class="ui row text container">
@@ -138,12 +141,12 @@
         </div>
         <div id="contactSection" class="section">
             <h1 class="ui dividing header">Contact</h1>
-            <form class="ui form" v-bind:action="test" method="POST">
+            <form class="ui form" v-bind:action="url" method="POST">
                 <div class="required field">
-                    <input type="text" name="name" placeholder="Name">
+                    <input type="text" name="name" placeholder="Your Name">
                 </div>
                 <div class="field">
-                    <input type="email" name="email" placeholder="Email">
+                    <input type="email" name="email" placeholder="Your Email">
                 </div>
                 <div class="field">
                     <input type="text" name="subject" placeholder="Subject">
