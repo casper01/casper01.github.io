@@ -1,0 +1,23 @@
+/* Playful: warm, rounded, colour per category. Fits the games and EkoAgent. */
+:root {
+  --font: "Nunito", system-ui, sans-serif;
+  --font-head: var(--font); --head-weight: 800; --head-tracking: -0.01em;
+  --bg: #fbf7f0; --surface: #ffffff; --text: #2a2522; --muted: #6e655e; --link: #e0583a;
+  --accent: #e0583a; --on-accent: #ffffff; --line: #efe6da; --line-strong: #dccfbf;
+  --tag-bg: #f6efe5; --badge-bg: #e3f4d7; --badge-text: #3e7a1c;
+  --radius: 20px; --radius-inner: 14px; --radius-btn: 99px; --radius-tag: 99px;
+  --avatar-border: 4px solid #ffffff; --shadow-hover: 0 12px 28px rgba(90, 60, 30, .12);
+}
+.avatar { box-shadow: 0 6px 18px rgba(90, 60, 30, .18); }
+.hero h1 { font-size: clamp(2.2rem, 6vw, 3.2rem); }
+.toc { border-bottom: none; gap: 8px; }
+.toc a { background: var(--surface); border: 1px solid var(--line); padding: 4px 14px; border-radius: 99px; color: var(--text); font-weight: 600; }
+.toc a:hover { text-decoration: none; border-color: var(--accent); }
+.featured { box-shadow: 0 10px 30px rgba(90, 60, 30, .08); border: none; }
+.card { border: none; box-shadow: 0 4px 14px rgba(90, 60, 30, .07); }
+.card[data-cat="ai"] { border-top: 6px solid #7c5cff; }
+.card[data-cat="game"] { border-top: 6px solid #ff8a3d; }
+.card[data-cat="tool"] { border-top: 6px solid #22b07d; }
+.card[data-cat="university"] { border-top: 6px solid #3d8bff; }
+.card[data-cat="puzzles"] { border-top: 6px solid #f2b705; }
+.btn { border-width: 2px; }

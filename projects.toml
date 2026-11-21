@@ -1,0 +1,70 @@
+# Configuration of the portfolio site. Everything that is not here
+# (descriptions, demo links, topics, languages) comes from the GitHub API.
+# A repo appears on the site when it has one of the category topics below.
+
+[site]
+user = "casper01"
+name = "Kacper Sarnacki"
+title = "Software Engineer"
+stack = "Python · Java · LLM agents"
+intro = "Software engineer from Warsaw, working with Python and Java. Currently focused on LLM agents."
+linkedin = ""            # e.g. "https://www.linkedin.com/in/..." (empty = hidden)
+show_avatar = true
+theme = "playful-dark"       # minimal | terminal | playful | playful-dark
+
+# Category topics, in the order they appear on the page.
+[[section]]
+topic = "ai"
+label = "AI"
+
+[[section]]
+topic = "game"
+label = "Games"
+
+[[section]]
+topic = "tool"
+label = "Tools"
+
+[[section]]
+topic = "university"
+label = "University"
+
+[[section]]
+topic = "puzzles"
+label = "Puzzles"
+
+# Repos never shown, even with a category topic.
+[hidden]
+repos = ["casper01", "casper01.github.io"]
+
+# Featured projects: shown large at the top and skipped in the sections below.
+[[featured]]
+repo = "music-store-sales-agent"
+facts = [
+  "Read-only SQL + RAG, tools picked by the model",
+  "Hand-written tool-calling loop, no agent framework",
+  "Every answer is backed by the SQL and sources it used",
+]
+snippet_question = "Which five countries generated the highest total revenue?"
+snippet_tools = "get_schema → run_sql"
+snippet_sql = """SELECT Customer.Country, ROUND(SUM(Invoice.Total), 2) AS TotalRevenue
+FROM Invoice
+JOIN Customer ON Invoice.CustomerId = Customer.CustomerId
+GROUP BY Customer.Country
+ORDER BY TotalRevenue DESC
+LIMIT 5;"""
+snippet_answer = "1. USA: $523.06 · 2. Canada: $303.96 · 3. France: $195.10 · 4. Brazil: $190.10 · 5. Germany: $156.48"
+
+[[featured]]
+# Private repo, so everything is given here.
+name = "EkoAgent"
+description = "An educational Android game for kids about sorting waste: find hidden rubbish and feed it to the right bin. 6 worlds, 54 levels, no ads, works offline."
+tags = ["Godot 4", "GDScript", "Android"]
+facts = [
+  "6 worlds, 54 hand-made levels",
+  "Original vector art and characters",
+  "Automated APK builds and store screenshots",
+]
+image = "assets/img/ekoagent/feature.jpg"
+gallery = ["assets/img/ekoagent/park.jpg", "assets/img/ekoagent/reef.jpg", "assets/img/ekoagent/castle.jpg"]
+status = "Coming soon to Google Play"

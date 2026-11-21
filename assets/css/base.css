@@ -1,0 +1,87 @@
+/* Layout shared by every theme. Colours and fonts live in the theme files. */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 var(--font); -webkit-font-smoothing: antialiased;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; display: block; }
+
+.hero, .toc, main, footer { max-width: 1040px; margin: 0 auto; padding-inline: 24px; }
+
+/* Hero */
+.hero { display: flex; gap: 28px; align-items: center; padding-top: 72px; padding-bottom: 32px; }
+.avatar { width: 112px; height: 112px; border-radius: 50%; flex: none; object-fit: cover; border: var(--avatar-border); }
+.hero h1 { margin: 0; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.1; font-family: var(--font-head); font-weight: var(--head-weight); letter-spacing: var(--head-tracking); }
+.role { margin: 8px 0 0; font-size: 1.1rem; font-weight: 600; color: var(--text); }
+.role .sep { color: var(--muted); font-weight: 400; margin: 0 4px; }
+.role .stack { color: var(--accent); }
+.intro { margin: 12px 0 18px; color: var(--muted); max-width: 60ch; }
+
+/* Navigation */
+.toc { display: flex; flex-wrap: wrap; gap: 6px 18px; padding-bottom: 8px; border-bottom: 1px solid var(--line); font-size: .95rem; }
+.toc a { color: var(--muted); }
+.toc a:hover { color: var(--text); }
+
+main section { padding-top: 48px; }
+h2 { margin: 0 0 20px; font-family: var(--font-head); font-size: 1.35rem; font-weight: var(--head-weight); letter-spacing: var(--head-tracking); }
+
+/* Buttons and tags */
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 12px; }
+.btn {
+  display: inline-block; padding: 6px 14px; font-size: .9rem; font-weight: 600;
+  border: 1px solid var(--line-strong); border-radius: var(--radius-btn); color: var(--text); background: var(--surface);
+}
+.btn:hover { text-decoration: none; border-color: var(--text); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.primary:hover { filter: brightness(1.08); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 10px 0 0; padding: 0; }
+.tag { font-size: .78rem; padding: 2px 9px; border-radius: var(--radius-tag); background: var(--tag-bg); color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.badge { display: inline-block; vertical-align: middle; font-size: .72rem; font-weight: 600; padding: 2px 10px; border-radius: 99px; background: var(--badge-bg); color: var(--badge-text); margin-left: 6px; font-family: var(--font); letter-spacing: 0; }
+
+/* Featured */
+.featured {
+  display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: start;
+  padding: 24px; margin-bottom: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+}
+.featured h3 { margin: 0 0 6px; font-size: 1.3rem; font-family: var(--font-head); }
+.featured p { margin: 0; color: var(--muted); }
+.feat-body { display: flex; flex-direction: column; height: 100%; }
+.facts { margin: 14px 0 0; padding-left: 1.1em; }
+.facts li { margin: 3px 0; }
+.facts li::marker { color: var(--accent); }
+
+.snippet { border-radius: var(--radius-inner); overflow: hidden; background: #0f1419; color: #d6deeb; font: 13px/1.55 "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+.term-bar { display: flex; gap: 6px; align-items: center; padding: 9px 12px; background: #1b222b; }
+.term-bar span { width: 10px; height: 10px; border-radius: 50%; background: #3a444f; }
+.term-bar em { margin-left: 8px; font-style: normal; color: #7d8894; font-size: 12px; }
+.snippet pre { margin: 0; padding: 14px 16px; white-space: pre-wrap; word-break: break-word; }
+.snippet .q { color: #82aaff; font-weight: 700; }
+.snippet .c { color: #637777; }
+.snippet .a { color: #addb67; }
+
+.gallery .hero-img { border-radius: var(--radius-inner); width: 100%; aspect-ratio: 1024 / 500; object-fit: cover; }
+.shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+.shots img { border-radius: var(--radius-inner); aspect-ratio: 9 / 12; object-fit: cover; object-position: top; width: 100%; }
+
+/* Project cards */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+.card { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .15s, border-color .15s, box-shadow .15s; }
+.card:hover { transform: translateY(-2px); border-color: var(--line-strong); box-shadow: var(--shadow-hover); }
+.thumb img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+.card-body { display: flex; flex-direction: column; flex: 1; padding: 16px 18px 18px; }
+.card h3 { margin: 0 0 4px; font-size: 1.05rem; font-family: var(--font-head); }
+.card h3 a { color: var(--text); }
+.card p { margin: 0; color: var(--muted); font-size: .93rem; }
+
+footer { padding-top: 56px; padding-bottom: 40px; color: var(--muted); font-size: .85rem; }
+
+@media (max-width: 760px) {
+  .hero { flex-direction: column; align-items: flex-start; padding-top: 40px; gap: 18px; }
+  .hero, .toc, main, footer { padding-inline: 16px; }
+  .featured { grid-template-columns: 1fr; padding: 16px; }
+  .avatar { width: 88px; height: 88px; }
+}
